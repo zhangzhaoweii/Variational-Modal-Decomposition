@@ -7,7 +7,7 @@
 import numpy as np
 import copy
 import scipy.fftpack as fftpack
-def VMD_for_nD_signal(f,alpha,tau,K,tol,Niter):
+def VMD_for_1D_signal(f,alpha,tau,K,tol,Niter):
     ltemp = len(f)//2 
     fs=1./len(f)
     fMirr =  np.append(np.flip(f[:ltemp],axis = 0),f)  
@@ -15,9 +15,8 @@ def VMD_for_nD_signal(f,alpha,tau,K,tol,Niter):
     T = len(fMirr)
     t = np.arange(1,T+1)/T  
     freqs = t-0.5-(1/T)
-    Niter = 7
     f_hat=np.zeros([1, K])
-    f_hat = np.fft.fftshift((np.fft.fft(fMirr)))
+    f_hat = fftpack.fftshift((fftpack.fft(fMirr)))
     f_hat_plus = np.copy(f_hat)
     f_hat_plus[:T//2] = 0
     omega_plus = np.zeros([1, K])
