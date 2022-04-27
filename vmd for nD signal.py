@@ -21,12 +21,12 @@ def VMD_for_nD_signal(f,alpha,tau,K,tol,Niter):
     freqs = t-0.5-(1/T)
     f_hat=np.zeros([f.shape[0], K])
     f_hat= fftpack.fftshift((fftpack.fft(fMirr)), axes=(1,))
-    f_hat_plus = np.copy(f_hat) #copy f_hat
+    f_hat_plus = np.copy(f_hat) 
     f_hat_plus[:,:T//2] = 0
     omega_plus = np.zeros([f.shape[0], K])
     lambda_hat = np.zeros([f.shape[0], T], dtype = complex)
     lambda_hat_temp=copy.deepcopy(lambda_hat)
-    uDiff = tol+np.spacing(1) # update step
+    uDiff = tol+np.spacing(1)
     uDiff_max=uDiff
     n = 0 
     sum_uk = 0
@@ -60,7 +60,7 @@ def VMD_for_nD_signal(f,alpha,tau,K,tol,Niter):
         for i in range(K):
             uDiff = uDiff + (1/T)*np.dot((u_hat_plus_cur[:,:,i]-u_hat_plus[:,:,i]),np.transpose(np.conj((u_hat_plus_cur[:,:,i]-u_hat_plus[:,:,i]))))
         uDiff = np.abs(uDiff)   
-        uDiff_max=min(np.diagonal(uDiff))
+        uDiff_max=max(np.diagonal(uDiff))
         u_hat_plus_pre=copy.deepcopy(u_hat_plus)
         lambda_hat_pre=copy.deepcopy(lambda_hat)
         omega_plus_pre=copy.deepcopy(omega_plus)
